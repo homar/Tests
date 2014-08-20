@@ -14,7 +14,8 @@ public class PersistanceConfig {
     @Bean
     public SessionFactory sessionFactory(){
         Configuration cfg = new Configuration()
-        .addAnnotatedClass(pl.homar.entity.Test.class)
+        .addAnnotatedClass(pl.homar.entity.Question.class)
+        .addAnnotatedClass(pl.homar.entity.Answer.class)
         .setProperty("hibernate.connection.driver_class", "org.postgresql.Driver")
         .setProperty("hibernate.connection.url", "jdbc:postgresql://localhost:5432/Testy")
         .setProperty("hibernate.connection.username", "postgres")
