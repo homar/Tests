@@ -1,0 +1,27 @@
+Tests
+=====
+
+DB
+
+PHASE1
+
+QUESTIONS
+id number
+text string
+
+ANSWERS_FOR_QUESTIONS
+question_id number
+answer_id number
+
+CORRECT_ASNWERS
+id number
+text string
+
+PHASE2
+USERS
+
+PHASE3
+TESTS
+id number
+name string
+
