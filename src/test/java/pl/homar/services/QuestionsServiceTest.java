@@ -7,6 +7,7 @@ import pl.homar.entity.Answer;
 import pl.homar.entity.Question;
 
 import java.util.Arrays;
+import java.util.HashSet;
 
 import static org.junit.Assert.assertTrue;
 import static org.mockito.Matchers.anyLong;
@@ -31,9 +32,10 @@ public class QuestionsServiceTest {
         Answer answer = new Answer();
         answer.setText(ANSWER);
         answer.setQuestion(question);
-        question.setAnswers(Arrays.asList(answer));
+        question.setAnswers(new HashSet(Arrays.asList(answer)));
         when(questionsDao.getAllQuestions()).thenReturn(Arrays.asList(question, question));
         when(questionsDao.getQuestionById(anyLong())).thenReturn(question);
+        when(questionsDao.createQuestion(QUESTION_TEXT, ANSWER)).thenReturn(question);
         questionsService.setQuestionsDao(questionsDao);
     }
 
@@ -41,6 +43,13 @@ public class QuestionsServiceTest {
     public void getRandomQuestionReturnsOneCorrectQuestion(){
         Question question = questionsService.getRandomQuestion();
         assertTrue(question.getText().equals(QUESTION_TEXT));
+    }
+
+    @Test
+    public void createNewQuestionCreatesCorrectQuestion(){
+        Question question = questionsService.createNewQuestion(QUESTION_TEXT, ANSWER);
+        assertTrue(question.getText().equals(QUESTION_TEXT));
+        assertTrue(question.getAnswers().iterator().next().getText().equals(ANSWER));
     }
 
     @Test

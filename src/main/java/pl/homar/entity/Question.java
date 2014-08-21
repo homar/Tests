@@ -2,7 +2,9 @@ package pl.homar.entity;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Konrad on 8/20/2014.
@@ -15,7 +17,9 @@ public class Question {
 
     private String text;
 
-    private List<Answer> answers = new ArrayList<Answer>();
+    private Set<Answer> answers = new HashSet<Answer>();
+
+    private Set<Test> tests = new HashSet<Test>();
 
     @Id
     @GeneratedValue
@@ -38,11 +42,37 @@ public class Question {
     }
 
     @OneToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL, mappedBy="question")
-    public List<Answer> getAnswers() {
+    public Set<Answer> getAnswers() {
         return answers;
     }
 
-    public void setAnswers(List<Answer> answers) {
+    public void setAnswers(Set<Answer> answers) {
         this.answers = answers;
+    }
+
+    @ManyToMany(fetch=FetchType.EAGER, mappedBy="questions")
+    public Set<Test> getTests() {
+        return tests;
+    }
+
+    public void setTests(Set<Test> tests) {
+        this.tests = tests;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Question question = (Question) o;
+
+        if (!id.equals(question.id)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return id.hashCode();
     }
 }

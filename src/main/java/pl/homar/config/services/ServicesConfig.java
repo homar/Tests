@@ -5,7 +5,9 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import pl.homar.dao.QuestionsDao;
+import pl.homar.dao.TestsDao;
 import pl.homar.services.QuestionsService;
+import pl.homar.services.TestsService;
 
 /**
  * Created by Konrad on 8/18/2014.
@@ -17,6 +19,9 @@ public class ServicesConfig {
     @Autowired
     QuestionsDao questionsDao;
 
+    @Autowired
+    TestsDao testsDao;
+
     @Bean
     public QuestionsService questionsService(){
         QuestionsService questionsService = new QuestionsService();
@@ -24,4 +29,11 @@ public class ServicesConfig {
         return questionsService;
     }
 
+    @Bean
+    public TestsService testsService(){
+        TestsService testsService = new TestsService();
+        testsService.setTestsDao(testsDao);
+        testsService.setQuestionsService(questionsService());
+        return testsService;
+    }
 }

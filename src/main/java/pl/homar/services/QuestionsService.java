@@ -20,16 +20,22 @@ public class QuestionsService {
         return questions.get(nextIndex);
     }
 
-    public void setQuestionsDao(QuestionsDao questionsDao) {
-        this.questionsDao = questionsDao;
-    }
 
     public boolean checkIfCorrectAnswer(Long questionId, String answer) {
-        System.out.println(questionId);
         Question question = questionsDao.getQuestionById(questionId);
-        if(question.getAnswers().get(0).getText().equals(answer)){
+        if(question.getAnswers().size() > 0 && question.getAnswers().iterator().next().getText().equals(answer)){
             return true;
         }
         return false;
     }
+
+    public Question createNewQuestion(String questionText, String answerText){
+        Question question = questionsDao.createQuestion(questionText, answerText);
+        return question;
+    }
+
+    public void setQuestionsDao(QuestionsDao questionsDao) {
+        this.questionsDao = questionsDao;
+    }
+
 }
